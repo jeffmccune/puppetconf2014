@@ -58,13 +58,13 @@ class openldap::server::slapdconf {
       fail 'You must specify a ssl_cert'
     }
 
-    if $::osfamily == 'RedHat'
-      and $::openldap::server::suffix != 'dc=my-domain,dc=com'
-      and !member(keys($::openldap::server::databases), 'dc=my-domain,dc=com') {
-      openldap::server::database { 'dc=my-domain,dc=com':
-        ensure    => absent,
-      }
-    }
+    # if $::osfamily == 'RedHat'
+    #   and $::openldap::server::suffix != 'dc=my-domain,dc=com'
+    #   and !member(keys($::openldap::server::databases), 'dc=my-domain,dc=com') {
+    #   openldap::server::database { 'dc=my-domain,dc=com':
+    #     ensure    => absent,
+    #   }
+    # }
 
     if !empty($::openldap::server::databases)
       and !member(keys($::openldap::server::databases), $::openldap::server::suffix) {

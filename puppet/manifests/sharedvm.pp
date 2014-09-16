@@ -13,6 +13,18 @@ node sharedvm {
     mode    => 0644,
   }
 
+  $ldap_suffix = 'dc=jeffmccune,dc=net'
+
   # Configure LDAP server
-  class { 'openldap::server': }
+  # rootpw is Password1, generated using openldap_password('Password1')
+  class { 'openldap::server':
+    suffix    => $ldap_suffix,
+    databases => {
+      "$ldap_suffix" => {
+        directory => '/var/lib/ldap',
+        rootdn    => "cn=admin,$ldap_suffix",
+        rootpw    => '{SSHA}saqSZkTVjEm7brfmTNj7YpgKWWXHerYh',
+      }
+    }
+  }
 }

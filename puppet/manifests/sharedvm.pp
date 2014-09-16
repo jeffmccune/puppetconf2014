@@ -1,6 +1,10 @@
 # VM that has both LDAP and Jenkins configured
 # with Puppet
 node sharedvm {
+  Package {
+    allow_virtual => true,
+  }
+
   file { '/identity.json':
     ensure  => file,
     content => "{description: 'Shared VM with LDAP and Jenkins'}\n",

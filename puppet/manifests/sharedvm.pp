@@ -9,4 +9,6 @@ node sharedvm {
     mode    => 0644,
   }
 
+  # Configure LDAP server
+  class { 'openldap::server': }
 }

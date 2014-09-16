@@ -1,0 +1,25 @@
+# User primary group
+dn: cn=jeff,ou=Groups,dc=jeffmccune,dc=net
+cn: jeff
+objectClass: top
+objectClass: posixGroup
+gidNumber: 10000
+
+# User account
+dn: uid=jeff,ou=users,dc=jeffmccune,dc=net
+cn: Jeff McCune
+givenName: Jeff
+sn: McCune
+uid: jeff
+uidNumber: 10000
+gidNumber: 10000
+homeDirectory: /home/jeff
+mail: jeff@puppetlabs.net
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+loginShell: /bin/zsh
+userPassword: {CRYPT}*

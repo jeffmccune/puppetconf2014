@@ -29,7 +29,13 @@ node sharedvm {
   }
 
   class { 'openldap::client':
-    base => $ldap_suffix,
-    uri  => ["ldap://${::fqdn}"],
+    base    => $ldap_suffix,
+    uri     => ["ldap://${::fqdn}"],
+    require => Class['openldap::server'],
+  }
+
+  # Data load
+  class { 'site::openldap':
+    require => Class['openldap::client'],
   }
 }

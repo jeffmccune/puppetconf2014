@@ -1,0 +1,18 @@
+# User account
+dn: uid=jeff,ou=Users,dc=jeffmccune,dc=net
+cn: Jeff McCune
+givenName: Jeff
+sn: McCune
+uid: jeff
+uidNumber: 10000
+gidNumber: 10000
+homeDirectory: /home/jeff
+mail: jeff@puppetlabs.net
+objectClass: top
+objectClass: posixAccount
+objectClass: shadowAccount
+objectClass: inetOrgPerson
+objectClass: organizationalPerson
+objectClass: person
+loginShell: /bin/zsh
+userPassword: {SSHA}saqSZkTVjEm7brfmTNj7YpgKWWXHerYh

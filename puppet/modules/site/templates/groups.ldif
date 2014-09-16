@@ -1,0 +1,3 @@
+dn: ou=Groups,dc=jeffmccune,dc=net
+objectClass: organizationalUnit
+ou: Groups

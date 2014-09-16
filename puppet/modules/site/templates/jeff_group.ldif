@@ -1,0 +1,6 @@
+# User primary group
+dn: cn=jeff,ou=groups,dc=jeffmccune,dc=net
+cn: jeff
+objectClass: top
+objectClass: posixGroup
+gidNumber: 10000

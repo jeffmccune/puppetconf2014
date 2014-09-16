@@ -1,0 +1,3 @@
+dn: ou=Users,dc=jeffmccune,dc=net
+objectClass: organizationalUnit
+ou: Users

@@ -17,6 +17,7 @@ class openldap::server(
     RedHat => $::operatingsystemmajrelease ? {
       5 => 'ldap',
       6 => 'slapd',
+      7 => 'slapd',
     },
   },
   $service_hasstatus = $::osfamily ? {

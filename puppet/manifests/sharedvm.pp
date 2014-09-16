@@ -27,4 +27,9 @@ node sharedvm {
       }
     }
   }
+
+  class { 'openldap::client':
+    base => $ldap_suffix,
+    uri  => ["ldap://${::fqdn}"],
+  }
 }

@@ -39,6 +39,8 @@ node sharedvm {
     require => Class['openldap::client'],
   }
 
+  # Packages, e.g. git and such
+  class { 'site::packages': }
 
   # Jenkins
   class { 'site::jenkins': }

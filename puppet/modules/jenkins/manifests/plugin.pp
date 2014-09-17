@@ -71,6 +71,7 @@ define jenkins::plugin(
 
     exec { "download-${name}" :
       command    => "rm -rf ${name} ${name}.* && wget --no-check-certificate ${base_url}${plugin}",
+      unless     => "test -f ${plugin_dir}/${name}.hpi || test -f ${plugin_dir}/${name}.jpi",
       cwd        => $plugin_dir,
       require    => [File[$plugin_dir], Package['wget']],
       path       => ['/usr/bin', '/usr/sbin', '/bin'],

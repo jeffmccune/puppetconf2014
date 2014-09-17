@@ -1,0 +1,2 @@
+slapd	slapd/domain	string	<%= @suffix.split(/,?dc=/).reject! { |c| c.empty? }.join('.') -%>
+

@@ -1,0 +1,724 @@
+{
+  "name": "domcleal-augeasproviders",
+  "version": "1.2.0",
+  "source": "git://github.com/hercules-team/augeasproviders",
+  "author": "Dominic Cleal, Raphael Pinson",
+  "license": "Apache 2.0",
+  "summary": "Alternative Augeas-based providers for Puppet",
+  "description": "This module provides alternative providers for core Puppet types using the Augeas configuration API library.",
+  "project_page": "http://github.com/hercules-team/augeasproviders",
+  "dependencies": [
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">=3.2.0 <5.0.0"
+    }
+  ],
+  "types": [
+    {
+      "name": "sshd_config",
+      "doc": "Manages settings in an OpenSSH sshd_config file.\n\nThe resource name is used for the setting name, but if the `condition` is\ngiven, then the name can be something else and the `key` given as the name\nof the setting.\n\nSubsystem entries are not managed by this type. There is a specific `sshd_config_subsystem` type to manage these entries.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "Value to change the setting to. The follow parameters take an array of values:\n\n- MACs;\n- AcceptEnv;\n- AllowGroups;\n- AllowUsers;\n- DenyGroups;\n- DenyUsers.\n\nAll other parameters take a string. When passing an array to other parameters, only the first value in the array will be considered.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the setting, or a unique string if `condition` given.\n\n"
+        },
+        {
+          "name": "key",
+          "doc": "Overrides setting name to prevent resource conflicts if `condition` is\ngiven.\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the settings, defaults to\n`/etc/ssh/sshd_config`.\n\n"
+        },
+        {
+          "name": "condition",
+          "doc": "Match group condition for the entry,\nin the format:\n\n    sshd_config { 'PermitRootLogin':\n      value     => 'without-password',\n      condition => 'Host example.net',\n    }\n\nThe value can contain multiple conditions, concatenated together with\nwhitespace.  This is used if the `Match` block has multiple criteria.\n\n    condition => 'Host example.net User root'\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update an sshd_config parameter"
+        }
+      ]
+    },
+    {
+      "name": "sysctl",
+      "doc": "Manages entries in /etc/sysctl.conf.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "val",
+          "doc": "An alias for 'value'. Maintains interface compatibility with the traditional ParsedFile sysctl provider. If both are set, 'value' will take precedence over 'val'.\n\n"
+        },
+        {
+          "name": "value",
+          "doc": "Value to change the setting to. Settings with multiple values (such as net.ipv4.tcp_mem) are represented as a single whitespace separated string.\n\n"
+        },
+        {
+          "name": "comment",
+          "doc": "Text to be stored in a comment immediately above the entry.  It will be automatically prepended with the name of the setting in order for the provider to know whether it controls the comment or not.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the setting, e.g. net.ipv4.ip_forward\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the settings, defaults to\n`/etc/sysctl.conf`.\n\n"
+        },
+        {
+          "name": "apply",
+          "doc": "Whether to apply the value using the sysctl command.\n\nValid values are `true`, `false`. "
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update sysctl settings\n\n* Required binaries: `sysctl`."
+        }
+      ]
+    },
+    {
+      "name": "apache_setenv",
+      "doc": "Manages SetEnv entries in a Apache config",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "The value to set it to\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The variable name to set\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The config file to use\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Use Augeas API to update SetEnv in Apache"
+        }
+      ]
+    },
+    {
+      "name": "sshd_config_subsystem",
+      "doc": "Manages Subsystem settings in an OpenSSH sshd_config file.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "command",
+          "doc": "The command to execute upon subsystem request.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the subsystem to set.\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the settings, defaults to\n`/etc/ssh/sshd_config`.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update a Subsystem parameter in sshd_config."
+        }
+      ]
+    },
+    {
+      "name": "kernel_parameter",
+      "doc": "Manages kernel parameters stored in bootloaders.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "value",
+          "doc": "Value of the parameter if applicable.  Many parameters are just keywords so this must be left blank, while others (e.g. 'vga') will take a value.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The parameter name, e.g. 'quiet' or 'vga'.\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The bootloader configuration file, if in a non-default location for the provider.\n\n"
+        },
+        {
+          "name": "bootmode",
+          "doc": "Boot mode(s) to apply the parameter to.  Either 'all' (default) to use the parameter on all boots (normal and recovery mode), 'normal' for just normal boots or 'recovery' for just recovery boots.\n\nValid values are `all`, `normal`, `recovery`. "
+        }
+      ],
+      "providers": [
+        {
+          "name": "grub",
+          "doc": "Uses Augeas API to update kernel parameters in GRUB's menu.lst"
+        },
+        {
+          "name": "grub2",
+          "doc": "Uses Augeas API to update kernel parameters in GRUB2's /etc/default/grub\n\n* Required binaries: `/usr/sbin/grub2-mkconfig`."
+        }
+      ]
+    },
+    {
+      "name": "syslog",
+      "doc": "Manages settings in syslog.conf.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "no_sync",
+          "doc": "Whether to omit syncing the file after every logging, ony when action_type is file.\n\nValid values are `true`, `false`. "
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the resource.\n\n"
+        },
+        {
+          "name": "facility",
+          "doc": "The syslog facility for the selector.\n\n"
+        },
+        {
+          "name": "level",
+          "doc": "The syslog level for the selector.\n\n"
+        },
+        {
+          "name": "action_type",
+          "doc": "The type of action: file, hostname, user or program.\n\n"
+        },
+        {
+          "name": "action",
+          "doc": "The action for the entry.\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the settings, defaults to\n`/etc/syslog.conf`.\n\n"
+        },
+        {
+          "name": "lens",
+          "doc": "The augeas lens used to parse the file\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update a syslog.conf entry"
+        },
+        {
+          "name": "rsyslog",
+          "doc": "Uses Augeas API to update an rsyslog.conf entry"
+        }
+      ]
+    },
+    {
+      "name": "apache_directive",
+      "doc": "Manages Apache directives",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "args",
+          "doc": "An array of directive arguments\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The directive name\n\n"
+        },
+        {
+          "name": "context",
+          "doc": "The path where the directive is located. Expressed as an Augeas path expression.\n\n"
+        },
+        {
+          "name": "args_params",
+          "doc": "How many arguments are to be used as params\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The config file to use\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Use the Augeas API to update a directive in Apache"
+        }
+      ]
+    },
+    {
+      "name": "nrpe_command",
+      "doc": "Manages commands in /etc/nagios/nrpe.cfg.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "command",
+          "doc": "Check command to run on the system, with arguments\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the command, e.g. check_my_stuff\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the command, defaults to\n`/etc/nagios/nrpe.cfg`.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update nrpe commands"
+        }
+      ]
+    },
+    {
+      "name": "shellvar",
+      "doc": "Manages variables in simple shell scripts.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "Create or remove the shellvar entry\n\nValid values are `present`, `absent`, `unset`, `exported`. "
+        },
+        {
+          "name": "value",
+          "doc": "Value to change the variable to.\n\n"
+        },
+        {
+          "name": "comment",
+          "doc": "Text to be stored in a comment immediately above the entry.  It will be automatically prepended with the name of the variable in order for the provider to know whether it controls the comment or not.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "variable",
+          "doc": "The name of the variable, e.g. OPTIONS\n\n"
+        },
+        {
+          "name": "quoted",
+          "doc": "Quoting method to use, defaults to `auto`.\n\n* `auto` will quote only if necessary, leaving existing quotes as-is\n* `double` and `single` will always quotes\n* `none` will remove quotes, which may result in save failures\n\nValid values are `auto`, `double`, `single`, `none`, `false`, `true`. "
+        },
+        {
+          "name": "array_type",
+          "doc": "Type of array mapping to use, defaults to `auto`.\n\n* `auto` will detect the current type, and default to `string`\n* `string` will render the array as a string and use space-separated values\n* `array` will render the array as a shell array\n\nValid values are `auto`, `string`, `array`. "
+        },
+        {
+          "name": "array_append",
+          "doc": "Whether to add to existing array values or replace all values.\n\nValid values are `false`, `true`. "
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the variable.\n\n"
+        },
+        {
+          "name": "uncomment",
+          "doc": "Whether to remove commented value when found.\n\nValid values are `true`, `false`. "
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update shell script variables"
+        }
+      ]
+    },
+    {
+      "name": "pg_hba",
+      "doc": "Manages commands in pg_hba.conf.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`, `positioned`. "
+        },
+        {
+          "name": "method",
+          "doc": "The authentication method\n\n"
+        },
+        {
+          "name": "options",
+          "doc": "The hash of authentication options\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The default namevar\n\n"
+        },
+        {
+          "name": "type",
+          "doc": "The type of host\n\nValid values are `local`, `host`, `hostssl`, `hostnossl`. "
+        },
+        {
+          "name": "database",
+          "doc": "The database\n\n"
+        },
+        {
+          "name": "user",
+          "doc": "The user\n\n"
+        },
+        {
+          "name": "address",
+          "doc": "The address (for host, hostssl, hostnossl types)\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to the pg_hba rule\n\n"
+        },
+        {
+          "name": "position",
+          "doc": "Where to place the new entry\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update pg_hba settings"
+        }
+      ]
+    },
+    {
+      "name": "puppet_auth",
+      "doc": "Manages settings in Puppet's auth.conf.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`. "
+        },
+        {
+          "name": "environments",
+          "doc": "The list of environments the rule applies to.\n\n"
+        },
+        {
+          "name": "methods",
+          "doc": "The list of methods the rule applies to. Possible values are:\n\n- find;\n- search;\n- save;\n- destroy.\n\n"
+        },
+        {
+          "name": "allow",
+          "doc": "The list of hosts allowed for this rule,\nspecified by hostname or cername. Regexes are allowed,\nas well as the special value `*`.\n\n"
+        },
+        {
+          "name": "allow_ip",
+          "doc": "The list of IPs allowed for this rule.\nRequires Puppet 3.0.0 or greater.\n\n"
+        },
+        {
+          "name": "authenticated",
+          "doc": "The type of authentication for the rule. Possible values are:\n\n- yes;\n- no;\n- on;\n- off;\n- any.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the resource.\n\n"
+        },
+        {
+          "name": "path",
+          "doc": "The path for the auth rule.\n\n"
+        },
+        {
+          "name": "path_regex",
+          "doc": "Whether the path is specified as a regex.\n\nValid values are `true`, `false`. "
+        },
+        {
+          "name": "ins_before",
+          "doc": "Optional XPath expression to specify where to insert the auth rule.\n\nThis parameter takes special values working as aliases:\n\n- `first allow`, mapping to `path[allow][1]`;\n- `last allow`, mapping to `path[allow][last()]`;\n- `first deny`, mapping to `path[count(allow)=0][1]`;\n- `last deny`, mapping to path[count(allow)=0][last()]`\n\n"
+        },
+        {
+          "name": "ins_after",
+          "doc": "Optional XPath expression to specify where to insert the auth rule.\n\nThis parameter takes special values working as aliases:\n\n- `first allow`, mapping to `path[allow][1]`;\n- `last allow`, mapping to `path[allow][last()]`;\n- `first deny`, mapping to `path[count(allow)=0][1]`;\n- `last deny`, mapping to path[count(allow)=0][last()]`\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the settings, defaults to\n`/etc/puppet/auth.conf`.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update a rule in Puppet's auth.conf."
+        }
+      ]
+    },
+    {
+      "name": "pam",
+      "doc": "Manages settings in an PAM service files.\n\nThe resource name is a descriptive string only due to the non-uniqueness of any single paramter.",
+      "properties": [
+        {
+          "name": "ensure",
+          "doc": "The basic property that the resource should be in.\n\nValid values are `present`, `absent`, `positioned`. "
+        },
+        {
+          "name": "optional",
+          "doc": "Whether failure to load the module will break things\n\nValid values are `true`, `false`. "
+        },
+        {
+          "name": "arguments",
+          "doc": "Arguments to assign for the module.\n\n"
+        },
+        {
+          "name": "control",
+          "doc": "Simple or complex definition of the module's behavior on failure.\n\n"
+        }
+      ],
+      "parameters": [
+        {
+          "name": "name",
+          "doc": "The name of the resource, has no bearing on anything\n\n"
+        },
+        {
+          "name": "service",
+          "doc": "The PAM service this entry will be placed in.  Typically this is the same as the\nfilename under /etc/pam.d\n\n"
+        },
+        {
+          "name": "type",
+          "doc": "The PAM service type of the setting: account, auth, password, session.\n\nValid values are `account`, `auth`, `password`, `session`. "
+        },
+        {
+          "name": "module",
+          "doc": "The name of the specific PAM module to load.\n\n"
+        },
+        {
+          "name": "control_is_param",
+          "doc": "Whether `control` should be considered a parameter or a property.\n\nValid values are `false`, `true`. "
+        },
+        {
+          "name": "position",
+          "doc": "A three part text field that providers the placement position of an entry.\n\nThe field consists of `placement identifier value`\n\nPlacement can be either `before` or `after`\nIdentifier can be either `first`, `last`, `module`, or an Augeas xpath\nValue is matched as follows:\n  With `first` and `last` match `value` to the `control` field, can be blank for absolute positioning.\n  With `module` matches the `module` field of the associated line, can not be blank.\n  With an Augeas xpath this field will be ignored, and should be blank.\n\n"
+        },
+        {
+          "name": "target",
+          "doc": "The file in which to store the settings, defaults to `/etc/pam.d/{service}`.\n\n"
+        }
+      ],
+      "providers": [
+        {
+          "doc": "Uses Augeas API to update an pam parameter"
+        }
+      ]
+    }
+  ],
+  "checksums": {
+    "CHANGELOG.md": "9fdd0b4732f8751337b437bae98e8852",
+    "CONTRIBUTING.md": "11e7aa5b3f05c7b09d32a385578db71f",
+    "Gemfile": "a2c6d144e5c1cabec0612f62d727dde4",
+    "Gemfile.lock": "39c847586df25e06b73c3164bfdda148",
+    "LICENSE": "0a23d6c579795bb78b0de2ba06b1dfeb",
+    "Modulefile": "8e8244e3f76f2d58ba4a9460ac8e724e",
+    "README.md": "b567334109516b448aa948162435bef7",
+    "Rakefile": "9fa53df215e4b68e62591deac3aad5ba",
+    "docs/CHANGELOG.html": "3d04c1ca6d86a52f149f7397709c745b",
+    "docs/CONTRIBUTING.html": "62f5e26ac9843f60888c8aa7cd45d2c5",
+    "docs/Makefile": "921b683276363963fcd02f80bbaa66da",
+    "docs/README.html": "7b4b26658dd5a51f55b0476bb761f84e",
+    "docs/buttondown.css": "f15e6924612f4c5ae477030bf7bf665b",
+    "docs/development.html": "3d6a7110d342af0021774e7e4473df9b",
+    "docs/development.md": "20f71cde7858b05f442fe0b6d525fd58",
+    "docs/examples/apache_directive.md": "282295d28da084891cba9a5750253df4",
+    "docs/examples/apache_setenv.md": "62cf9cadbf3f207734ee5c6d3c84143e",
+    "docs/examples/host.md": "ccc23a5bc50a746c90a6890012d64ce7",
+    "docs/examples/kernel_parameter.md": "716f9890eef1a71bfbed77ef16219471",
+    "docs/examples/mailalias.md": "5e13bdf971e6c1ae81ce946c4cde9276",
+    "docs/examples/mounttab.md": "a244e500f1ce2d991e56dc93dc7cb869",
+    "docs/examples/nrpe_command.md": "6ae395751d493a28ca591078a6587695",
+    "docs/examples/pam.md": "6336b5e11713fe202cc0b31ad120cc8a",
+    "docs/examples/pg_hba.md": "be48d901f065eb79eb812a99047ab7ff",
+    "docs/examples/puppet_auth.md": "35c2400a4c63112680da83d24a901674",
+    "docs/examples/shellvar.md": "522ca48e7c4d5f937bf3293ae2779841",
+    "docs/examples/sshd_config.md": "226cd405bfafb81cba6bc3baf9d99182",
+    "docs/examples/sshd_config_subsystem.md": "e5dacd86a8bb2679f08908ecbbb2f42f",
+    "docs/examples/sysctl.md": "1d41d081676e14ec7afa3a10ec77f2ea",
+    "docs/examples/syslog.md": "355e0ff109881a34986302676d258791",
+    "docs/examples.html": "bbfabdcb45835013939f38c85021e50b",
+    "docs/examples.md": "9e84dcd07b74223764ed521de6ff1d99",
+    "docs/examples_header.html": "38bc028bfbb548055794773f5b41e264",
+    "docs/examples_header.md": "30ca99c44f2c022d61c33d3c951f5e4c",
+    "docs/images/augeasproviders-spec-augparse.png": "19df7091646b354bcf85903b28cdf2d6",
+    "docs/images/augeasproviders-spec-part1.png": "9d4bd03096614a39bf0d8beeb1537749",
+    "docs/images/augeasproviders-spec-specshould.png": "b803dd2e6acaa7e67d9c030aab312d4f",
+    "docs/images/library_stack.png": "645d5224c26ee955e69decb0dd88e9c7",
+    "docs/images/library_stack.svg": "3752ae20852fbf861a9523e6bb65bf9f",
+    "docs/index.html": "f954ece50883ebb857b3b2a4929c7343",
+    "docs/index.md": "931b65460955ab401aada4df1f6524c7",
+    "docs/motw.html": "034a9db3e63ad841db1c88d271fb0409",
+    "docs/motw.md": "0227cd4d0aee940d1df0ebea7b5fcb06",
+    "docs/specs.html": "d6664c76bf2ba3ba63470de78518925a",
+    "docs/specs.md": "9eb05fe66f1d4e3686515182bac19e38",
+    "lib/augeasproviders/mounttab/fstab.rb": "f3f9f13e7b02c7c8a12e1ecf19623194",
+    "lib/augeasproviders/mounttab/vfstab.rb": "6805bda370ee898c8cbf8cd0025a7579",
+    "lib/augeasproviders/mounttab.rb": "d0dd1845a9408148eed0d8dbb93790c2",
+    "lib/augeasproviders/provider.rb": "cf7c241824ae305fcd7f72222e13ee94",
+    "lib/augeasproviders/type.rb": "1a91d2fec25301a1ba09042462f4372c",
+    "lib/augeasproviders.rb": "4730498403c2d9ced6d586669ae7bbbc",
+    "lib/puppet/provider/apache_directive/augeas.rb": "54243f6b5f36a550df3c3ff331eb17fe",
+    "lib/puppet/provider/apache_setenv/augeas.rb": "7b0bb403d1e8a0e836c44483ff0f3968",
+    "lib/puppet/provider/host/augeas.rb": "06cd5cea7734d6d5bd8f615c2e9d91fe",
+    "lib/puppet/provider/kernel_parameter/grub.rb": "71287395f604a5da1126d7e7a0461b94",
+    "lib/puppet/provider/kernel_parameter/grub2.rb": "f5a5d66bdbd8569d20c6203122906e6a",
+    "lib/puppet/provider/mailalias/augeas.rb": "c946c0234222870e3d23173caf0271d6",
+    "lib/puppet/provider/mounttab/augeas.rb": "4fb8ca71e32615f7e5010118e918401e",
+    "lib/puppet/provider/nrpe_command/augeas.rb": "48c89d460143691cd900ba48d3d68307",
+    "lib/puppet/provider/pam/augeas.rb": "0d1d4541bcbd34d44ee62cfaa6605d84",
+    "lib/puppet/provider/pg_hba/augeas.rb": "d103ffee037f64d3fa23a1f8839eb8c3",
+    "lib/puppet/provider/puppet_auth/augeas.rb": "219cd36dadedcb7c307383e22f28acdd",
+    "lib/puppet/provider/shellvar/augeas.rb": "9f5d7d73496cefa1add829ea89935fd6",
+    "lib/puppet/provider/sshd_config/augeas.rb": "9714e0e4132594e7325a60a85fcc6d6d",
+    "lib/puppet/provider/sshd_config_subsystem/augeas.rb": "cd7f546458cd0a4a2e1c2933594874b7",
+    "lib/puppet/provider/sysctl/augeas.rb": "c4f5dc8000a3278d0d0a6697fccb8ff4",
+    "lib/puppet/provider/syslog/augeas.rb": "b8fda7e3e627fb5b2ff1e0dec98d91d9",
+    "lib/puppet/provider/syslog/rsyslog.rb": "22e1b4e9aa3d90ab51b1591d48226ac2",
+    "lib/puppet/type/apache_directive.rb": "7abf7ae903c9128e61852c484913444a",
+    "lib/puppet/type/apache_setenv.rb": "dddc11b0c1c3ca92434f3820b70bbdf7",
+    "lib/puppet/type/kernel_parameter.rb": "aa05738676e60fb432edd61fb72f95ea",
+    "lib/puppet/type/nrpe_command.rb": "b639c9ee2cd6b5be91c3518be9ce8cad",
+    "lib/puppet/type/pam.rb": "2916841d6077fab3cb2d547c19087d8f",
+    "lib/puppet/type/pg_hba.rb": "22750898802ef2d02d4f0825d6ca3c95",
+    "lib/puppet/type/puppet_auth.rb": "4879beaae171df46cc70ca6cd9057f1d",
+    "lib/puppet/type/shellvar.rb": "05c0fb277f27d7cfd146eac458801c20",
+    "lib/puppet/type/sshd_config.rb": "281b25e8ddd43aaecd0373358dfa2a13",
+    "lib/puppet/type/sshd_config_subsystem.rb": "f8d2d0e7ae12eb222c97825f275c3cd9",
+    "lib/puppet/type/sysctl.rb": "ab61fd2889a36f80993cb3e8d2fa5711",
+    "lib/puppet/type/syslog.rb": "38d8db1bf661078a68f2aaa03aa4a752",
+    "manifests/init.pp": "33a2ec2e85db97f9b8b3e27d7b08e7d5",
+    "manifests/instances.pp": "d88dca308fb178266ff7cbaa794758c6",
+    "manifests/params.pp": "3524ed3f13c8b9923a4772fb9ea7a361",
+    "spec/acceptance/augeasproviders_instances_spec.rb": "5b5dfd42963c6a46af3aa35cd2bc854e",
+    "spec/acceptance/nodesets/centos-65-x64.yml": "df83bb84f68458b15f5a5e4af0c6f700",
+    "spec/acceptance/nodesets/default.yml": "df83bb84f68458b15f5a5e4af0c6f700",
+    "spec/classes/augeasproviders_instances_spec.rb": "0862cc7bd7df2c77a161b444b87ac3f1",
+    "spec/fixtures/manifests/site.pp": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/augeasproviders/provider/broken": "7657a3a3c58088d06aa33ab174622ef4",
+    "spec/fixtures/unit/augeasproviders/provider/full": "20380104252d133d336cec79930ac625",
+    "spec/fixtures/unit/puppet/provider/apache_directive/augeas/broken": "6a01556b45cde8a64fcb809810d41d43",
+    "spec/fixtures/unit/puppet/provider/apache_directive/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/apache_directive/augeas/full": "ac2608c38289d3ee813d001a3b6868ec",
+    "spec/fixtures/unit/puppet/provider/apache_directive/augeas/simple": "534e3774e415f71a0eeea3e1c276ff3c",
+    "spec/fixtures/unit/puppet/provider/apache_setenv/augeas/broken": "6a01556b45cde8a64fcb809810d41d43",
+    "spec/fixtures/unit/puppet/provider/apache_setenv/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/apache_setenv/augeas/full": "ac2608c38289d3ee813d001a3b6868ec",
+    "spec/fixtures/unit/puppet/provider/apache_setenv/augeas/simple": "534e3774e415f71a0eeea3e1c276ff3c",
+    "spec/fixtures/unit/puppet/provider/host/augeas/broken": "7657a3a3c58088d06aa33ab174622ef4",
+    "spec/fixtures/unit/puppet/provider/host/augeas/empty": "68b329da9893e34099c7d8ad5cb9c940",
+    "spec/fixtures/unit/puppet/provider/host/augeas/full": "20380104252d133d336cec79930ac625",
+    "spec/fixtures/unit/puppet/provider/kernel_parameter/grub/broken": "3d1c58f1d44d0231f34bae6b2e08c3df",
+    "spec/fixtures/unit/puppet/provider/kernel_parameter/grub/full": "11c31975ef0c4ae6749b326d02b3f44a",
+    "spec/fixtures/unit/puppet/provider/kernel_parameter/grub2/broken": "dd0b6633ef7bf01593927e0953555749",
+    "spec/fixtures/unit/puppet/provider/kernel_parameter/grub2/full": "ff203824922bb2bc5e823ffd0d9287f5",
+    "spec/fixtures/unit/puppet/provider/mailalias/augeas/broken": "7657a3a3c58088d06aa33ab174622ef4",
+    "spec/fixtures/unit/puppet/provider/mailalias/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/mailalias/augeas/full": "d9b9c7aad242e609402cf588ec5a7486",
+    "spec/fixtures/unit/puppet/provider/mailalias/augeas/fullquotes": "76a769cc7efe5e27e3c992c9cb695588",
+    "spec/fixtures/unit/puppet/provider/mounttab/fstab/broken": "14e37dc984061fe2f3b32f666872b9aa",
+    "spec/fixtures/unit/puppet/provider/mounttab/fstab/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/mounttab/fstab/full": "2b3b7ac3537282fe0e063dee8e5f13db",
+    "spec/fixtures/unit/puppet/provider/mounttab/fstab/nooptions": "36122c5b2fc9619838c0f009c41612c0",
+    "spec/fixtures/unit/puppet/provider/mounttab/vfstab/broken": "c670fb8d65147a83eea6baeec218a093",
+    "spec/fixtures/unit/puppet/provider/mounttab/vfstab/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/mounttab/vfstab/full": "73cd949d3b00bff34b25e21e84197e8d",
+    "spec/fixtures/unit/puppet/provider/nrpe_command/augeas/broken": "7657a3a3c58088d06aa33ab174622ef4",
+    "spec/fixtures/unit/puppet/provider/nrpe_command/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/nrpe_command/augeas/full": "f51ce4ffb282fdd0782db7993ea230a7",
+    "spec/fixtures/unit/puppet/provider/pam/augeas/broken": "91cebbc69448370fc68523b13f7a0b3d",
+    "spec/fixtures/unit/puppet/provider/pam/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/pam/augeas/full": "d4cbec98880cf2b231b4a3294998e270",
+    "spec/fixtures/unit/puppet/provider/pg_hba/augeas/broken": "cf43a8b553a24d7fada4537d28911cae",
+    "spec/fixtures/unit/puppet/provider/pg_hba/augeas/empty": "68b329da9893e34099c7d8ad5cb9c940",
+    "spec/fixtures/unit/puppet/provider/pg_hba/augeas/full": "068aafbab0d59bedf45bed12699f67e0",
+    "spec/fixtures/unit/puppet/provider/puppet_auth/augeas/broken": "56f785241d0ed9fe51a8170b9dd50272",
+    "spec/fixtures/unit/puppet/provider/puppet_auth/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/puppet_auth/augeas/full": "1bf33c8f5fa99e42a5490cf8166a3c80",
+    "spec/fixtures/unit/puppet/provider/shellvar/augeas/broken": "b25c9c687a562b638209926a7cdeec02",
+    "spec/fixtures/unit/puppet/provider/shellvar/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/shellvar/augeas/full": "079000d480a428c76df227b6b4e99cf7",
+    "spec/fixtures/unit/puppet/provider/sshd_config/augeas/broken": "180da60c75056519fdaf4b4e8fe73e56",
+    "spec/fixtures/unit/puppet/provider/sshd_config/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/sshd_config/augeas/full": "5ab8777a3fcb5ec2738a6b98c1a1a097",
+    "spec/fixtures/unit/puppet/provider/sshd_config/augeas/nomatch": "dd6d6436ccd4c090f0afe8e4463510d0",
+    "spec/fixtures/unit/puppet/provider/sshd_config_subsystem/augeas/broken": "180da60c75056519fdaf4b4e8fe73e56",
+    "spec/fixtures/unit/puppet/provider/sshd_config_subsystem/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/sshd_config_subsystem/augeas/full": "336b6c3da647bb3b052a8bc178425c02",
+    "spec/fixtures/unit/puppet/provider/sysctl/augeas/broken": "aa67165e4473758e4ba97de49d85f861",
+    "spec/fixtures/unit/puppet/provider/sysctl/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/sysctl/augeas/full": "f647c9efc637e452c88259ab7f90e71c",
+    "spec/fixtures/unit/puppet/provider/sysctl/augeas/small": "f7c2d9f63cd00cca8d055bcf83e4911c",
+    "spec/fixtures/unit/puppet/provider/syslog/augeas/broken": "9d1884537b34bb75b6545014a85b5296",
+    "spec/fixtures/unit/puppet/provider/syslog/augeas/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/syslog/augeas/full": "3509686927da43b107dc1090d0caaaae",
+    "spec/fixtures/unit/puppet/provider/syslog/rsyslog/broken": "0d97022df1ad5428512f5c20f49e5b79",
+    "spec/fixtures/unit/puppet/provider/syslog/rsyslog/empty": "d41d8cd98f00b204e9800998ecf8427e",
+    "spec/fixtures/unit/puppet/provider/syslog/rsyslog/full": "ab5109f47b56cdf68d1a49d1dc2f161e",
+    "spec/lib/augeas_spec/augparse.rb": "aba3b1e4cba77c5cae79b365a8625f67",
+    "spec/lib/augeas_spec/fixtures.rb": "957152713139276627a2005b40a481ed",
+    "spec/lib/augeas_spec.rb": "347f96f25a5610c69519af8c05cf35d5",
+    "spec/spec.opts": "a600ded995d948e393fbe2320ba8e51c",
+    "spec/spec_helper.rb": "a0948045235dd9867762437309b383d7",
+    "spec/spec_helper_acceptance.rb": "906c51f535be8591b383938c14e58c9f",
+    "spec/support/apache_directive.rb": "27d471ef5d6504137424a41f79bfd630",
+    "spec/support/apache_setenv.rb": "47adb3c38a35928f42d38a5c6ba9d0f9",
+    "spec/support/host.rb": "af1585f3de449ac6f90fa9ba36bbb4ed",
+    "spec/support/kernel_parameter.rb": "60f8d6349e3220f273fa2fa60f2c7512",
+    "spec/support/mailalias.rb": "cf9b038988973c66bff66c4bbb8af6f8",
+    "spec/support/mounttab.rb": "d2da444fb82130de76bee91cd51d0353",
+    "spec/support/nrpe_command.rb": "cfa04a21a737e983ff347d6b6f2eaf31",
+    "spec/support/pam.rb": "881fce50d55676433bc4f589e7b8954b",
+    "spec/support/pg_hba.rb": "bbdfecd72fa7d2c0cc3cff84d09e9f70",
+    "spec/support/puppet_auth.rb": "2e3a64ef8ad52d992e5d93e9cbd017bb",
+    "spec/support/shellvar.rb": "a4c508c426642ebc3672f516c0a7b0a3",
+    "spec/support/sshd_config.rb": "beeacf330c780c1af1edaa6e3541a61c",
+    "spec/support/sshd_config_subsystem.rb": "5cb8e5ab720429a04bcb4c76cf08678c",
+    "spec/support/sysctl.rb": "c7717156547bcb18f4c8be9158bd0bd9",
+    "spec/support/syslog.rb": "3c5903204fbde642b7c78d34899dd678",
+    "spec/support/validate_hash.rb": "a15a8fe7f10161718c755a82a31f9f33",
+    "spec/unit/augeasproviders/provider_spec.rb": "5496980f274232b7eb4e57612320af14",
+    "spec/unit/puppet/provider/apache_directive/augeas_spec.rb": "1aafa6f662154ae7643e32437079de6b",
+    "spec/unit/puppet/provider/apache_setenv/augeas_spec.rb": "4d721ec28430b568d7034c9753fa21d0",
+    "spec/unit/puppet/provider/host/augeas_spec.rb": "2c845bcce3d02393ca1f6a0a09038519",
+    "spec/unit/puppet/provider/kernel_parameter/grub2_spec.rb": "6b27266a6dafac6e7a6c65ca8a155a03",
+    "spec/unit/puppet/provider/kernel_parameter/grub_spec.rb": "eb5d33d32c0c469d760d49981a322284",
+    "spec/unit/puppet/provider/mailalias/augeas_spec.rb": "66051a76c26ca611105195bbf358982f",
+    "spec/unit/puppet/provider/mounttab/fstab_spec.rb": "c137ea0ca57adad32aa210e7f3cdd0d0",
+    "spec/unit/puppet/provider/mounttab/vfstab_spec.rb": "8ee6e246a7c975e680e60bf3b33ccd2e",
+    "spec/unit/puppet/provider/nrpe_command/augeas_spec.rb": "1a751265d24a474c856fa6dcd6142ce4",
+    "spec/unit/puppet/provider/pam/augeas_spec.rb": "9431ebed4e56e4133b2c9c3439cfc07a",
+    "spec/unit/puppet/provider/pg_hba/augeas_spec.rb": "c063786d3d8d13631fd4b22e6f4b98c0",
+    "spec/unit/puppet/provider/puppet_auth/augeas_spec.rb": "34b45da468b714a4190516d98a12b83e",
+    "spec/unit/puppet/provider/shellvar/augeas_spec.rb": "a79302d9b9fed2d67555ad075b87ffa9",
+    "spec/unit/puppet/provider/sshd_config/augeas_spec.rb": "783c62ef1e3653621b5e9785c87a1bc9",
+    "spec/unit/puppet/provider/sshd_config_subsystem/augeas_spec.rb": "b8b1a285812c0c974cf02ff610b6dbea",
+    "spec/unit/puppet/provider/sysctl/augeas_spec.rb": "8e7a8d4b06fb09357b2a909dfd952d9d",
+    "spec/unit/puppet/provider/syslog/augeas_spec.rb": "43d9c9a10c86bbb876ea97e223ebf0a7",
+    "spec/unit/puppet/provider/syslog/rsyslog_spec.rb": "baa1bddc9efe096d60c7b9a23b6dd344",
+    "spec/unit/puppet/type/shellvar_type_spec.rb": "2f18150a7c96830e639546a4dafff3e2",
+    "tags": "eac850cb0531a9a054e99b89f7fb65f1"
+  }
+}

@@ -43,5 +43,9 @@ node sharedvm {
   class { 'site::packages': }
 
   # Jenkins
-  class { 'site::jenkins': }
+  class { 'site::jenkins':
+    ldap_server => 'ldap://localhost',
+    rootdn      => $ldap_suffix,
+    message     => 'jeffmccune.net Jenkins Server',
+  }
 }

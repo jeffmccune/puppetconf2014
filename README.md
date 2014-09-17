@@ -38,7 +38,9 @@ To get started with the lightweight containers:
 
 # LDAP Load
 
-Once the VM is created from scratch, load the data in the following order:
+Once the VM is created from scratch, load the data in the following order.
+Note, this initial data load happens automatically when the `site::openldap`
+class is included in the configuration catalog.
 
     schema=/etc/openldap/schema
     sudo ldapadd -Y EXTERNAL -H ldapi:/// -f $schema/core.ldif

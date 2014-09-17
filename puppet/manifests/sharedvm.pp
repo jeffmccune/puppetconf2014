@@ -38,4 +38,14 @@ node sharedvm {
   class { 'site::openldap':
     require => Class['openldap::client'],
   }
+
+  # Packages, e.g. git and such
+  class { 'site::packages': }
+
+  # Jenkins
+  class { 'site::jenkins':
+    ldap_server => 'ldap://localhost',
+    rootdn      => $ldap_suffix,
+    message     => 'jeffmccune.net Jenkins Server',
+  }
 }

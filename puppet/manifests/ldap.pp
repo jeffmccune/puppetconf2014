@@ -30,6 +30,8 @@ node ldap {
     }
   }
 
+  class { ldap_service_override: }
+
   class { 'openldap::client':
     base    => $ldap_suffix,
     uri     => ["ldap://${::fqdn}"],
@@ -39,5 +41,21 @@ node ldap {
   # Data load
   class { 'site::openldap':
     require => Class['openldap::client'],
+  }
+}
+
+class ldap_service_override inherits openldap::server::service {
+  Service[slapd] {
+    ensure  => running,
+    enable  => undef,
+    start   => '/usr/sbin/slapd -u ldap -h "ldapi:/// ldap:///"',
+    stop    => '/bin/kill -TERM $(cat /var/run/openldap/slapd.pid)',
+    restart => '/bin/kill -HUP $(cat /var/run/openldap/slapd.pid)',
+  }
+  exec { 'slapd enable':
+    command     => 'systemctl enable slapd',
+    path        => '/sbin:/bin:/usr/sbin:/usr/bin',
+    refreshonly => true,
+    subscribe   => Service[slapd],
   }
 }

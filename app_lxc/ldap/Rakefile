@@ -8,3 +8,8 @@ desc 'Build ldap_sysd base image (LDAP+systemd)'
 task :build do
   sh 'docker build --no-cache -t ldap_sysd .'
 end
+
+desc 'Run the ldap service on 127.0.0.1:10389'
+task :run do
+  sh 'docker run -p 127.0.0.1:10389:389 -d --name ldap ldap_sysd'
+end

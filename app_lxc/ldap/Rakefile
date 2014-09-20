@@ -1,0 +1,10 @@
+# encoding: utf-8
+
+task :default do
+  sh 'rake -T'
+end
+
+desc 'Build ldap_sysd base image (LDAP+systemd)'
+task :build do
+  sh 'docker build --no-cache -t ldap_sysd .'
+end

@@ -2,9 +2,10 @@
 #
 class jenkins::service {
 
-  if $caller_module_name != $module_name {
-    fail("Use of private class ${name} by ${caller_module_name}")
-  }
+  ## We need to override Service[jenkins] for the docker build phase.
+  # if $caller_module_name != $module_name {
+  #   fail("Use of private class ${name} by ${caller_module_name}")
+  # }
 
   service { 'jenkins':
     ensure     => $jenkins::service_ensure,

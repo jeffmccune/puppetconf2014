@@ -25,5 +25,9 @@ RUN yum -y install puppet git hostname; yum clean all
 # Work around puppet warning about missing hiera.yaml file
 RUN touch /etc/puppet/hiera.yaml
 
+# Cache the base packages managed by puppet
+RUN yum -y install git ruby make ruby-devel rubygem-rake rubygem-bundler rubygem-rdoc gcc sqlite sqlite-devel telnet; yum clean all
+RUN yum -y install java wget; yum clean all
+
 # start services:
 CMD ["/usr/sbin/init"]

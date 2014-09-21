@@ -1,0 +1,22 @@
+# encoding: utf-8
+
+task :default do
+  sh 'rake -T'
+end
+
+desc 'Build jenkins base image (LDAP+systemd)'
+task :build => [:tar_puppet] do
+  sh 'docker build --no-cache -t jenkins .'
+end
+
+desc 'Run the jenkins service on 127.0.0.1:8080'
+task :run do
+  sh 'docker run --privileged -p 127.0.0.1:8080:8080 -d --name jenkins jenkins'
+end
+
+##
+
+desc 'Create puppet.tar.gz from ../../puppet'
+task :tar_puppet do
+  sh 'tar --directory=../.. -czf- puppet/ > puppet.tar.gz'
+end

@@ -4,6 +4,7 @@
 #
 class site::packages {
   $packages = [ 'git', 'ruby', 'ruby-devel', 'rubygem-bundler', 'rubygem-rdoc',
-                'make', 'gcc', 'sqlite', 'sqlite-devel' ]
+                'rubygem-rake', 'make', 'gcc', 'sqlite', 'sqlite-devel',
+                'telnet' ]
   package { $packages: ensure => latest }
 }

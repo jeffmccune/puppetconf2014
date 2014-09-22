@@ -1,0 +1,10 @@
+# encoding: utf-8
+
+task :default do
+  sh 'rake -T'
+end
+
+desc 'Build centos7vps base image (systemd)'
+task :build do
+  sh 'docker build -t centos7vps .'
+end

@@ -36,60 +36,55 @@ To get started with the lightweight containers:
     cd app_lxc
     vagrant up
 
-# LDAP Load
+# Docker Containers
 
-Once the VM is created from scratch, load the data in the following order.
-Note, this initial data load happens automatically when the `site::openldap`
-class is included in the configuration catalog.
+Once the `app_lxc` vagrant image is running, the docker images may be built and
+then run.  The LDAP container should be built first and the jenkins container
+connected to a running ldap container for authentication.
 
-    schema=/etc/openldap/schema
-    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f $schema/core.ldif
-    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f $schema/cosine.ldi
-    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f $schema/inetorgperson.ldif
-    sudo ldapadd -Y EXTERNAL -H ldapi:/// -f $schema/nis.ldif
+Build the systemd enabled centos base image as a pre-requisite to the other
+containers.  This enables systemd as an option when running containers, however
+systemd is not operating during the `docker build` phase and as such `service`
+resources in Puppet still need to be overridden for the puppet run to complete
+successfully during the build phase.  The build process will produce the
+`centos7vps` base image.
 
-With the schema loaded, add the root site:
+    cd app_lxc
+    vagrant ssh
+    cd /vagrant/systemd
+    rake build
 
-    $ ldapadd -D cn=admin,dc=jeffmccune,dc=net -w Password1 -H ldapi:/// \
-      -f /tmp/vagrant-puppet-2/modules-0/site/templates/site.ldif
-    adding new entry "dc=jeffmccune,dc=net"
+Build and run the ldap container.  It is "lite" because it runs without systemd
+or any other processes, only `slapd`.  The build process will produce the
+`ldap_lite` base image.
 
-And verify with ldap search.  You should not get a `32 No such object`
-response, which indicates there is no root object.
+    cd app_lxc
+    vagrant ssh
+    cd /vagrant/ldap_lite
+    rake build
+    rake run
 
-    $ ldapsearch -Y EXTERNAL -H ldapi:///
-    SASL/EXTERNAL authentication started
-    SASL username: gidNumber=0+uidNumber=0,cn=peercred,cn=external,cn=auth
-    SASL SSF: 0
-    # extended LDIF
-    #
-    # LDAPv3
-    # base <dc=jeffmccune,dc=net> (default) with scope subtree
-    # filter: (objectclass=*)
-    # requesting: ALL
-    #
-    # jeffmccune.net
-    dn: dc=jeffmccune,dc=net
-    objectClass: dcObject
-    objectClass: organization
-    dc: jeffmccune
-    o: jeffmccune
-    # search result
-    search: 2
-    result: 0 Success
-    # numResponses: 2
-    # numEntries: 1
+At this point there will be a running LDAP service, configured by Puppet:
 
-Now load the rest of the structure:
+    docker ps
+    CONTAINER ID        IMAGE               COMMAND                CREATED         STATUS         PORTS    NAMES
+    058bcb050aa9        ldap_lite:latest    "/usr/sbin/slapd -u    20 minutes ago  Up 20 minutes  389/tcp  ldap
 
-    $ ldapadd -D cn=admin,dc=jeffmccune,dc=net -w Password1 -H ldapi:/// -f groups.ldif
-    adding new entry "ou=Groups,dc=jeffmccune,dc=net"
-    $ ldapadd -D cn=admin,dc=jeffmccune,dc=net -w Password1 -H ldapi:/// -f users.ldif
-    adding new entry "ou=Users,dc=jeffmccune,dc=net"
+Next, build the jenkins container.  The build process will produce the
+`jenkins:lite` base image.  The run process needs to run after the ldap
+container is running because jenkins requires ldap for authentication.
 
-Now load the accounts themselves:
+    cd app_lxc
+    cd /vagrant/ldap_lite
+    rake build
+    rake run
 
-    ldapadd -D cn=admin,dc=jeffmccune,dc=net -w Password1 -H ldapi:/// -f jeff_group.ldif
-    adding new entry "cn=jeff,ou=groups,dc=jeffmccune,dc=net"
-    ldapadd -D cn=admin,dc=jeffmccune,dc=net -w Password1 -H ldapi:/// -f jeff_user.ldif
-    adding new entry "uid=jeff,ou=users,dc=jeffmccune,dc=net"
+At this point there will be a running Jenkins service connected to the LDAP
+container for authentication.
+
+    docker ps
+    CONTAINER ID        IMAGE               COMMAND                CREATED             STATUS              PORTS                    NAMES
+    cc8845a2cc73        jenkins:lite        "/usr/bin/java -DJEN   25 minutes ago      Up 25 minutes       0.0.0.0:8080->8080/tcp   jenkins
+    058bcb050aa9        ldap_lite:latest    "/usr/sbin/slapd -u    26 minutes ago      Up 26 minutes       389/tcp                  jenkins/ldap,ldap
+
+EOF

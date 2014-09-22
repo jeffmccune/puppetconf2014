@@ -1,0 +1,15 @@
+# encoding: utf-8
+
+task :default do
+  sh 'rake -T'
+end
+
+desc 'Build ldap_lite base image (LDAP only)'
+task :build do
+  sh 'docker build --no-cache -t ldap_lite .'
+end
+
+desc 'Run the ldap service'
+task :run do
+  sh 'docker run -d --name ldap ldap_lite'
+end

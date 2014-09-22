@@ -116,7 +116,7 @@ class jenkins(
     }
   }
 
-  class {'jenkins::service':}
+  include 'jenkins::service'
 
   if defined('::firewall') {
     if $configure_firewall == undef {

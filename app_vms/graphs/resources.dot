@@ -1,0 +1,969 @@
+digraph Resources {
+    label = "Resources"
+    "Stage[main]" [
+        fontsize = 8,
+        label = "Stage[main]"
+    ]
+
+    "Class[Settings]" [
+        fontsize = 8,
+        label = "Class[Settings]"
+    ]
+
+    "Class[Main]" [
+        fontsize = 8,
+        label = "Class[Main]"
+    ]
+
+    "Node[sharedvm]" [
+        fontsize = 8,
+        label = "Node[sharedvm]"
+    ]
+
+    "File[/identity.json]" [
+        fontsize = 8,
+        label = "File[/identity.json]"
+    ]
+
+    "Class[Openldap::Server]" [
+        fontsize = 8,
+        label = "Class[Openldap::Server]"
+    ]
+
+    "Class[Openldap::Server::Install]" [
+        fontsize = 8,
+        label = "Class[Openldap::Server::Install]"
+    ]
+
+    "Class[Openldap::Client::Utils]" [
+        fontsize = 8,
+        label = "Class[Openldap::Client::Utils]"
+    ]
+
+    "Package[openldap-clients]" [
+        fontsize = 8,
+        label = "Package[openldap-clients]"
+    ]
+
+    "Package[openldap-servers]" [
+        fontsize = 8,
+        label = "Package[openldap-servers]"
+    ]
+
+    "Class[Openldap::Server::Config]" [
+        fontsize = 8,
+        label = "Class[Openldap::Server::Config]"
+    ]
+
+    "Shellvar[SLAPD_LDAP]" [
+        fontsize = 8,
+        label = "Shellvar[SLAPD_LDAP]"
+    ]
+
+    "Shellvar[SLAPD_LDAPS]" [
+        fontsize = 8,
+        label = "Shellvar[SLAPD_LDAPS]"
+    ]
+
+    "Shellvar[SLAPD_LDAPI]" [
+        fontsize = 8,
+        label = "Shellvar[SLAPD_LDAPI]"
+    ]
+
+    "Shellvar[SLAPD_URLS]" [
+        fontsize = 8,
+        label = "Shellvar[SLAPD_URLS]"
+    ]
+
+    "Class[Openldap::Server::Service]" [
+        fontsize = 8,
+        label = "Class[Openldap::Server::Service]"
+    ]
+
+    "Service[slapd]" [
+        fontsize = 8,
+        label = "Service[slapd]"
+    ]
+
+    "Class[Openldap::Server::Slapdconf]" [
+        fontsize = 8,
+        label = "Class[Openldap::Server::Slapdconf]"
+    ]
+
+    "File[/etc/openldap/slapd.d]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/slapd.d]"
+    ]
+
+    "Openldap::Server::Database[dc=jeffmccune,dc=net]" [
+        fontsize = 8,
+        label = "Openldap::Server::Database[dc=jeffmccune,dc=net]"
+    ]
+
+    "Class[Openldap::Client]" [
+        fontsize = 8,
+        label = "Class[Openldap::Client]"
+    ]
+
+    "Class[Openldap::Client::Install]" [
+        fontsize = 8,
+        label = "Class[Openldap::Client::Install]"
+    ]
+
+    "Package[openldap]" [
+        fontsize = 8,
+        label = "Package[openldap]"
+    ]
+
+    "Class[Openldap::Client::Config]" [
+        fontsize = 8,
+        label = "Class[Openldap::Client::Config]"
+    ]
+
+    "Augeas[ldap.conf+base]" [
+        fontsize = 8,
+        label = "Augeas[ldap.conf+base]"
+    ]
+
+    "Augeas[ldap.conf+uri]" [
+        fontsize = 8,
+        label = "Augeas[ldap.conf+uri]"
+    ]
+
+    "Class[Site::Openldap]" [
+        fontsize = 8,
+        label = "Class[Site::Openldap]"
+    ]
+
+    "File[/etc/openldap/data]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/data]"
+    ]
+
+    "File[/etc/openldap/data/site.ldif]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/data/site.ldif]"
+    ]
+
+    "File[/etc/openldap/data/groups.ldif]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/data/groups.ldif]"
+    ]
+
+    "File[/etc/openldap/data/users.ldif]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/data/users.ldif]"
+    ]
+
+    "File[/etc/openldap/data/jeff_group.ldif]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/data/jeff_group.ldif]"
+    ]
+
+    "File[/etc/openldap/data/jeff_user.ldif]" [
+        fontsize = 8,
+        label = "File[/etc/openldap/data/jeff_user.ldif]"
+    ]
+
+    "Exec[core schema]" [
+        fontsize = 8,
+        label = "Exec[core schema]"
+    ]
+
+    "Exec[cosine schema]" [
+        fontsize = 8,
+        label = "Exec[cosine schema]"
+    ]
+
+    "Exec[inetorgperson schema]" [
+        fontsize = 8,
+        label = "Exec[inetorgperson schema]"
+    ]
+
+    "Exec[nis schema]" [
+        fontsize = 8,
+        label = "Exec[nis schema]"
+    ]
+
+    "Exec[dc=jeffmccune,dc=net]" [
+        fontsize = 8,
+        label = "Exec[dc=jeffmccune,dc=net]"
+    ]
+
+    "Exec[ou=Groups]" [
+        fontsize = 8,
+        label = "Exec[ou=Groups]"
+    ]
+
+    "Exec[ou=Users]" [
+        fontsize = 8,
+        label = "Exec[ou=Users]"
+    ]
+
+    "Exec[cn=jeff,ou=Groups]" [
+        fontsize = 8,
+        label = "Exec[cn=jeff,ou=Groups]"
+    ]
+
+    "Exec[uid=jeff,ou=Users]" [
+        fontsize = 8,
+        label = "Exec[uid=jeff,ou=Users]"
+    ]
+
+    "Class[Site::Packages]" [
+        fontsize = 8,
+        label = "Class[Site::Packages]"
+    ]
+
+    "Package[git]" [
+        fontsize = 8,
+        label = "Package[git]"
+    ]
+
+    "Package[ruby]" [
+        fontsize = 8,
+        label = "Package[ruby]"
+    ]
+
+    "Package[ruby-devel]" [
+        fontsize = 8,
+        label = "Package[ruby-devel]"
+    ]
+
+    "Package[rubygem-bundler]" [
+        fontsize = 8,
+        label = "Package[rubygem-bundler]"
+    ]
+
+    "Package[rubygem-rdoc]" [
+        fontsize = 8,
+        label = "Package[rubygem-rdoc]"
+    ]
+
+    "Package[rubygem-rake]" [
+        fontsize = 8,
+        label = "Package[rubygem-rake]"
+    ]
+
+    "Package[make]" [
+        fontsize = 8,
+        label = "Package[make]"
+    ]
+
+    "Package[gcc]" [
+        fontsize = 8,
+        label = "Package[gcc]"
+    ]
+
+    "Package[sqlite]" [
+        fontsize = 8,
+        label = "Package[sqlite]"
+    ]
+
+    "Package[sqlite-devel]" [
+        fontsize = 8,
+        label = "Package[sqlite-devel]"
+    ]
+
+    "Package[telnet]" [
+        fontsize = 8,
+        label = "Package[telnet]"
+    ]
+
+    "Class[Site::Jenkins]" [
+        fontsize = 8,
+        label = "Class[Site::Jenkins]"
+    ]
+
+    "Class[Jenkins::Params]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Params]"
+    ]
+
+    "Class[Jenkins]" [
+        fontsize = 8,
+        label = "Class[Jenkins]"
+    ]
+
+    "Anchor[jenkins::begin]" [
+        fontsize = 8,
+        label = "Anchor[jenkins::begin]"
+    ]
+
+    "Anchor[jenkins::end]" [
+        fontsize = 8,
+        label = "Anchor[jenkins::end]"
+    ]
+
+    "Class[Java]" [
+        fontsize = 8,
+        label = "Class[Java]"
+    ]
+
+    "Class[Java::Params]" [
+        fontsize = 8,
+        label = "Class[Java::Params]"
+    ]
+
+    "Anchor[java::begin:]" [
+        fontsize = 8,
+        label = "Anchor[java::begin:]"
+    ]
+
+    "Package[java]" [
+        fontsize = 8,
+        label = "Package[java]"
+    ]
+
+    "Class[Java::Config]" [
+        fontsize = 8,
+        label = "Class[Java::Config]"
+    ]
+
+    "Anchor[java::end]" [
+        fontsize = 8,
+        label = "Anchor[java::end]"
+    ]
+
+    "Class[Jenkins::Repo]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Repo]"
+    ]
+
+    "Class[Stdlib]" [
+        fontsize = 8,
+        label = "Class[Stdlib]"
+    ]
+
+    "Class[Stdlib::Stages]" [
+        fontsize = 8,
+        label = "Class[Stdlib::Stages]"
+    ]
+
+    "Stage[setup]" [
+        fontsize = 8,
+        label = "Stage[setup]"
+    ]
+
+    "Stage[runtime]" [
+        fontsize = 8,
+        label = "Stage[runtime]"
+    ]
+
+    "Stage[setup_infra]" [
+        fontsize = 8,
+        label = "Stage[setup_infra]"
+    ]
+
+    "Stage[deploy_infra]" [
+        fontsize = 8,
+        label = "Stage[deploy_infra]"
+    ]
+
+    "Stage[setup_app]" [
+        fontsize = 8,
+        label = "Stage[setup_app]"
+    ]
+
+    "Stage[deploy_app]" [
+        fontsize = 8,
+        label = "Stage[deploy_app]"
+    ]
+
+    "Stage[deploy]" [
+        fontsize = 8,
+        label = "Stage[deploy]"
+    ]
+
+    "Anchor[jenkins::repo::begin]" [
+        fontsize = 8,
+        label = "Anchor[jenkins::repo::begin]"
+    ]
+
+    "Anchor[jenkins::repo::end]" [
+        fontsize = 8,
+        label = "Anchor[jenkins::repo::end]"
+    ]
+
+    "Class[Jenkins::Repo::El]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Repo::El]"
+    ]
+
+    "Yumrepo[jenkins]" [
+        fontsize = 8,
+        label = "Yumrepo[jenkins]"
+    ]
+
+    "Class[Jenkins::Package]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Package]"
+    ]
+
+    "Package[jenkins]" [
+        fontsize = 8,
+        label = "Package[jenkins]"
+    ]
+
+    "Class[Jenkins::Config]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Config]"
+    ]
+
+    "Class[Jenkins::Plugins]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Plugins]"
+    ]
+
+    "Class[Jenkins::Service]" [
+        fontsize = 8,
+        label = "Class[Jenkins::Service]"
+    ]
+
+    "Service[jenkins]" [
+        fontsize = 8,
+        label = "Service[jenkins]"
+    ]
+
+    "File[/var/lib/jenkins/config.xml]" [
+        fontsize = 8,
+        label = "File[/var/lib/jenkins/config.xml]"
+    ]
+
+    "Jenkins::Plugin[credentials]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[credentials]"
+    ]
+
+    "Jenkins::Plugin[scm-api]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[scm-api]"
+    ]
+
+    "Jenkins::Plugin[token-macro]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[token-macro]"
+    ]
+
+    "Jenkins::Plugin[parameterized-trigger]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[parameterized-trigger]"
+    ]
+
+    "Jenkins::Plugin[git-client]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[git-client]"
+    ]
+
+    "Jenkins::Plugin[ssh-credentials]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[ssh-credentials]"
+    ]
+
+    "Jenkins::Plugin[git]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[git]"
+    ]
+
+    "Jenkins::Plugin[ldap]" [
+        fontsize = 8,
+        label = "Jenkins::Plugin[ldap]"
+    ]
+
+    "File[/var/lib/ldap]" [
+        fontsize = 8,
+        label = "File[/var/lib/ldap]"
+    ]
+
+    "Openldap_database[dc=jeffmccune,dc=net]" [
+        fontsize = 8,
+        label = "Openldap_database[dc=jeffmccune,dc=net]"
+    ]
+
+    "File[/var/lib/jenkins]" [
+        fontsize = 8,
+        label = "File[/var/lib/jenkins]"
+    ]
+
+    "File[/var/lib/jenkins/plugins]" [
+        fontsize = 8,
+        label = "File[/var/lib/jenkins/plugins]"
+    ]
+
+    "Group[jenkins]" [
+        fontsize = 8,
+        label = "Group[jenkins]"
+    ]
+
+    "User[jenkins]" [
+        fontsize = 8,
+        label = "User[jenkins]"
+    ]
+
+    "Package[wget]" [
+        fontsize = 8,
+        label = "Package[wget]"
+    ]
+
+    "Exec[download-credentials]" [
+        fontsize = 8,
+        label = "Exec[download-credentials]"
+    ]
+
+    "File[/var/lib/jenkins/plugins/credentials.hpi]" [
+        fontsize = 8,
+        label = "File[/var/lib/jenkins/plugins/credentials.hpi]"
+    ]
+
+    "Exec[download-ssh-credentials]" [
+        fontsize = 8,
+        label = "Exec[download-ssh-credentials]"
+    ]
+
+    "File[/var/lib/jenkins/plugins/ssh-credentials.hpi]" [
+        fontsize = 8,
+        label = "File[/var/lib/jenkins/plugins/ssh-credentials.hpi]"
+    ]
+
+    "Exec[download-ldap]" [
+        fontsize = 8,
+        label = "Exec[download-ldap]"
+    ]
+
+    "File[/var/lib/jenkins/plugins/ldap.hpi]" [
+        fontsize = 8,
+        label = "File[/var/lib/jenkins/plugins/ldap.hpi]"
+    ]
+
+    "Schedule[puppet]" [
+        fontsize = 8,
+        label = "Schedule[puppet]"
+    ]
+
+    "Schedule[hourly]" [
+        fontsize = 8,
+        label = "Schedule[hourly]"
+    ]
+
+    "Schedule[daily]" [
+        fontsize = 8,
+        label = "Schedule[daily]"
+    ]
+
+    "Schedule[weekly]" [
+        fontsize = 8,
+        label = "Schedule[weekly]"
+    ]
+
+    "Schedule[monthly]" [
+        fontsize = 8,
+        label = "Schedule[monthly]"
+    ]
+
+    "Schedule[never]" [
+        fontsize = 8,
+        label = "Schedule[never]"
+    ]
+
+    "Filebucket[puppet]" [
+        fontsize = 8,
+        label = "Filebucket[puppet]"
+    ]
+
+    "Stage[main]" -> "Class[Settings]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Main]" [
+        fontsize = 8
+    ]
+
+    "Class[Main]" -> "Node[sharedvm]" [
+        fontsize = 8
+    ]
+
+    "Node[sharedvm]" -> "File[/identity.json]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Server]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Server::Install]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Client::Utils]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Client::Utils]" -> "Package[openldap-clients]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Install]" -> "Package[openldap-servers]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Server::Config]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Config]" -> "Shellvar[SLAPD_LDAP]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Config]" -> "Shellvar[SLAPD_LDAPS]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Config]" -> "Shellvar[SLAPD_LDAPI]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Config]" -> "Shellvar[SLAPD_URLS]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Server::Service]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Service]" -> "Service[slapd]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Server::Slapdconf]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Slapdconf]" -> "File[/etc/openldap/slapd.d]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Server::Slapdconf]" -> "Openldap::Server::Database[dc=jeffmccune,dc=net]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Client]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Client::Install]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Client::Install]" -> "Package[openldap]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Openldap::Client::Config]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Client::Config]" -> "Augeas[ldap.conf+base]" [
+        fontsize = 8
+    ]
+
+    "Class[Openldap::Client::Config]" -> "Augeas[ldap.conf+uri]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Site::Openldap]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "File[/etc/openldap/data]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "File[/etc/openldap/data/site.ldif]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "File[/etc/openldap/data/groups.ldif]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "File[/etc/openldap/data/users.ldif]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "File[/etc/openldap/data/jeff_group.ldif]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "File[/etc/openldap/data/jeff_user.ldif]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[core schema]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[cosine schema]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[inetorgperson schema]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[nis schema]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[dc=jeffmccune,dc=net]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[ou=Groups]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[ou=Users]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[cn=jeff,ou=Groups]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Openldap]" -> "Exec[uid=jeff,ou=Users]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Site::Packages]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[git]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[ruby]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[ruby-devel]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[rubygem-bundler]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[rubygem-rdoc]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[rubygem-rake]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[make]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[gcc]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[sqlite]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[sqlite-devel]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Packages]" -> "Package[telnet]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Site::Jenkins]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Params]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins]" -> "Anchor[jenkins::begin]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins]" -> "Anchor[jenkins::end]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Java]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Java::Params]" [
+        fontsize = 8
+    ]
+
+    "Class[Java]" -> "Anchor[java::begin:]" [
+        fontsize = 8
+    ]
+
+    "Class[Java]" -> "Package[java]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Java::Config]" [
+        fontsize = 8
+    ]
+
+    "Class[Java]" -> "Anchor[java::end]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Repo]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Stdlib]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Stdlib::Stages]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins::Repo]" -> "Anchor[jenkins::repo::begin]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins::Repo]" -> "Anchor[jenkins::repo::end]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Repo::El]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins::Repo::El]" -> "Yumrepo[jenkins]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Package]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins::Package]" -> "Package[jenkins]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Config]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Plugins]" [
+        fontsize = 8
+    ]
+
+    "Stage[main]" -> "Class[Jenkins::Service]" [
+        fontsize = 8
+    ]
+
+    "Class[Jenkins::Service]" -> "Service[jenkins]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "File[/var/lib/jenkins/config.xml]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[credentials]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[scm-api]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[token-macro]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[parameterized-trigger]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[git-client]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[ssh-credentials]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[git]" [
+        fontsize = 8
+    ]
+
+    "Class[Site::Jenkins]" -> "Jenkins::Plugin[ldap]" [
+        fontsize = 8
+    ]
+
+    "Openldap::Server::Database[dc=jeffmccune,dc=net]" -> "File[/var/lib/ldap]" [
+        fontsize = 8
+    ]
+
+    "Openldap::Server::Database[dc=jeffmccune,dc=net]" -> "Openldap_database[dc=jeffmccune,dc=net]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "File[/var/lib/jenkins]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "File[/var/lib/jenkins/plugins]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "Group[jenkins]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "User[jenkins]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "Package[wget]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "Exec[download-credentials]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[credentials]" -> "File[/var/lib/jenkins/plugins/credentials.hpi]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[ssh-credentials]" -> "Exec[download-ssh-credentials]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[ssh-credentials]" -> "File[/var/lib/jenkins/plugins/ssh-credentials.hpi]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[ldap]" -> "Exec[download-ldap]" [
+        fontsize = 8
+    ]
+
+    "Jenkins::Plugin[ldap]" -> "File[/var/lib/jenkins/plugins/ldap.hpi]" [
+        fontsize = 8
+    ]
+
+}

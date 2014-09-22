@@ -4,14 +4,14 @@ task :default do
   sh 'rake -T'
 end
 
-desc 'Build jenkins base image (LDAP+systemd)'
+desc 'Build jenkins base image (lightweight)'
 task :build => [:tar_puppet] do
-  sh 'docker build --no-cache -t jenkins:systemd .'
+  sh 'docker build -t jenkins:lite .'
 end
 
-desc 'Run the jenkins service on 8080 (systemd)'
+desc 'Run the jenkins service on 8080'
 task :run do
-  sh 'docker run --privileged -d --name jenkins --link ldap:ldap -p 8080:8080 jenkins:systemd'
+  sh 'docker run -d --name jenkins --link ldap:ldap -p 8080:8080 jenkins:lite'
 end
 
 ##
